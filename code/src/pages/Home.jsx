@@ -12,14 +12,16 @@ import InstructorSection from '../components/core/HomePage/InstructorSection'
 import ExploreMore from '../components/core/HomePage/ExploreMore'
 
 function Home() {
+    
     return (
         <div>
+
             {/* Section1 */}
             <div className='relative max-w-maxContent mx-auto flex flex-col w-11/12 items-center text-white justify-between'>
 
                 <Link to={"/signup"}>
                     <div className=' group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 transition-all duration-200 hover:scale-95 w-fit'>
-                        <div className='flex flex-row items-center gap-2 rounded-fullf px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900 rounded-full'>
+                        <div className='flex flex-row items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900 rounded-full'>
                             <p>Become an Instructor</p>
                             <FaArrowRight />
                         </div>
@@ -48,11 +50,18 @@ function Home() {
                     </CTAButton>
                 </div>
 
-                <div className='shadow-blue-200 shadow-[10px_-5px_50px_-5px] mx-3 my-12'>
-                    <video muted loop autoPlay className="shadow-[18px_18px_rgba(255,255,255)]">
-                        <source src={Banner} type='video/mp4/' />
+                <div className="mx-3 my-8 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
+                    <video
+                        className="shadow-[20px_20px_rgba(255,255,255)]"
+                        muted
+                        loop
+                        autoPlay
+                    >
+                        <source src={Banner} type="video/mp4" />
                     </video>
                 </div>
+
+
 
                 {/* Code Section 1 */}
                 <div>
@@ -90,7 +99,7 @@ function Home() {
                 {/* Code Section 2 */}
                 <div>
                     <CodeBlocks
-                        position={"lg:flex-row-reverse"}
+                        position={"flex-row-reverse"}
                         heading={
                             <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
                                 Start

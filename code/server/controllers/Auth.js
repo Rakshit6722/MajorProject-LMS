@@ -148,6 +148,7 @@ exports.signUp = async (req, res) => {
                 success: false,
                 message: "User cannot be registered, please try again..."
             })
+            
     }
 
 
