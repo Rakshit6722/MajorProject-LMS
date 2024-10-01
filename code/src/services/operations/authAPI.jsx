@@ -128,3 +128,45 @@ export const resetPassword = (password,confirmPassword,token) => {
         dispatch(setLoading(false))
     }
 }
+
+export function signUp(
+    accountType,
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    otp,
+    navigate
+){
+    return async(dispatch)=>{
+        const toastId = toast.loading("Loading...")
+        dispatch(setLoading(true))
+        try{
+            const response = await apiConnector("POSt",SIGNUP_API,{
+                accountType,
+                firstName,
+                lastName,
+                email,
+                password,
+                confirmPassword,
+                otp,
+            })
+
+            console.log("SIGNUP API RESPONSE...",response)
+
+            if(!response.data.success){
+                throw new Error(response.data.message)
+            }
+            toast.success("Signup Successful")
+            navigate("/login")
+        }catch(err){
+            console.log("SIGNUP API FAILED...",err)
+            toast.error("Signup Failed")
+            navigate("/signup")
+        }
+
+        dispatch(setLoading(false))
+        toast.dismiss(toastId)
+    }
+}

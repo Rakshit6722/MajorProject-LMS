@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { resetPassword } from '../../server/controllers/ResetPassword'
+import { resetPassword } from '../services/operations/authAPI'
+import { Link } from 'react-router-dom'
+import { BiArrowBack } from 'react-icons/bi'
 
 function UpdatePassword() {
 
@@ -28,10 +30,10 @@ function UpdatePassword() {
         })
     }
 
-    const handleOnSumit = (e) => {
+    const handleOnSubmit = (e) => {
         e.preventDefault()
         const token = location.pathname.split("/").at(-1)
-        dispatch(resetPassword(password,confirmPassword,token))
+        dispatch(resetPassword(password, confirmPassword, token))
     }
 
     return (
@@ -54,22 +56,22 @@ function UpdatePassword() {
                                 </p>
                                 <input
                                     required
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
                                     value={password}
-                                    name='password'
-                                    placeholder='Enter Password'
-                                    className='form-style w-full !pr-10'
+                                    onChange={handleOnChange}
+                                    placeholder="Enter Password"
+                                    className="form-style w-full !pr-10"
                                 />
                                 <span
-                                    className='className="absolute right-3 top-[38px] z-[10] cursor-pointer'
-                                    onClick={() => setShowPassword(prev => !prev)}
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="absolute right-3 top-[38px] z-[10] cursor-pointer"
                                 >
-                                    {
-                                        showPassword ? (<>
-                                            <AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' />
-                                        </>) : (<>
-                                            <AiOutlineEye fontSize={24} fill='#AFB2BF' />
-                                        </>)
-                                    }
+                                    {showPassword ? (
+                                        <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                                    ) : (
+                                        <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                                    )}
                                 </span>
                             </label>
                             <label className="relative mt-3 block">
