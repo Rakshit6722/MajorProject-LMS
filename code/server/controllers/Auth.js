@@ -8,7 +8,7 @@ const cookie = require('cookie-parser')
 const { json } = require('express')
 require('config').config();
 const mailSender = require('../utils/mailSender')
-const {passwordUpdate} = require('../templates/passwordUpdate')
+const { passwordUpdate } = require('../templates/passwordUpdate')
 
 
 
@@ -19,9 +19,9 @@ exports.sendOTP = async (req, res) => {
 
         const { email } = req.body;
 
-        const checkUser = await User.findOne({ email })
+        const checkUserPresent = await User.findOne({ email })
 
-        if (checkUser) {
+        if (checkUserPresent) {
             return res.status(401).json({ success: false, message: "User already exists" })
         }
 
@@ -34,7 +34,6 @@ exports.sendOTP = async (req, res) => {
 
         //check if otp is unique
         let result = await OTP.findOne({ otp })
-
         //bekar code 
         while (result) {
             otp = otpGenerator.generate(6, {
@@ -72,9 +71,17 @@ exports.sendOTP = async (req, res) => {
 exports.signUp = async (req, res) => {
 
     try {
-        const { firstname, lastname, email, password, confirmPassword, accountType, contactNumber, otp } = req.body
+        const {
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+            accountType,
+            contactNumber,
+            otp } = req.body
 
-        if (!firstname || !lastname || !email || !password || !confirmPassword || !otp) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
             return res.status(403).json({
                 success: false,
                 message: "All fields are required"
@@ -88,8 +95,9 @@ exports.signUp = async (req, res) => {
             })
         }
 
-        const findUser = await User.findOne({ email })
-        if (findUser) {
+        //check is user ex
+        const existingUser = await User.findOne({ email })
+        if (existingUser) {
             return res.status(401).json({
                 success: false,
                 message: "user already exists"
@@ -106,7 +114,7 @@ exports.signUp = async (req, res) => {
                 success: false,
                 message: "OTP not found"
             })
-        } else if (otp !== recentOTP.otp) {
+        } else if (otp !== recentOTP[0].otp) {
             return res.statu(400).json({
                 success: false,
                 message: "OTP not matched"
@@ -127,19 +135,20 @@ exports.signUp = async (req, res) => {
 
         //entry db
         const user = await User.create({
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             email,
             contactNumber,
             password: hashpassword,
             accountType,
             additionalDetails: additionalDetails._id,
-            image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstname} ${lastname}`
+            image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
 
         })
 
         res.status(200).json({
             success: true,
+            user,
             message: 'user is registered successfully'
         })
     } catch (err) {
@@ -148,7 +157,7 @@ exports.signUp = async (req, res) => {
                 success: false,
                 message: "User cannot be registered, please try again..."
             })
-            
+
     }
 
 
@@ -170,9 +179,9 @@ exports.login = async (req, res) => {
         }
 
         //find if user exists or not
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email }).populate("additionalDetails")
         if (!user) {
-            return res.status(400).json({
+            return res.status(401).json({
                 success: false,
                 message: "User does not exist"
             })
@@ -187,7 +196,7 @@ exports.login = async (req, res) => {
             }
 
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
-                expiresIn: "2hr"
+                expiresIn: "24hr"
             })
 
             user = user.toObject();
@@ -200,7 +209,7 @@ exports.login = async (req, res) => {
             }
 
 
-            res.cookie("cookie", token, options).status(200).json({
+            res.cookie("token", token, options).status(200).json({
                 success: true,
                 user,
                 token,
@@ -249,7 +258,7 @@ exports.changePassword = async (req, res) => {
                 'Password Updated successfully',
                 passwordUpdate(updatedUser.email, updatedUser.firstName)
             )
-            console.log("email sent successfully ",emailResponse)
+            console.log("email sent successfully ", emailResponse)
         } catch (err) {
             console.log("Error occured while sending password update mail ", err)
             return res.status(500).json({
@@ -266,7 +275,8 @@ exports.changePassword = async (req, res) => {
         console.log("password updation failed ", err);
         res.status(500).json({
             success: false,
-            message: "Password updation failed"
+            message: "Password updation failed",
+            error: err.message
         })
     }
 }

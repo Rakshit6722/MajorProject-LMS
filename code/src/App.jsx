@@ -21,6 +21,11 @@ import EnrolledCourse from './components/core/Dashboard/EnrolledCourse'
 import Cart from './components/core/Dashboard/Cart/Index'
 import Instructor from './components/core/Dashboard/InstructorDashboard/Instructor'
 import AddCourse from './components/core/Dashboard/AddCourse'
+import EditCourse from './components/core/Dashboard/EditCourse'
+import MyCourses from './components/core/Dashboard/MyCourses'
+import Catalog from './pages/Catalog'
+import VideoDetails from './components/core/viewCourse/VideoDetails'
+import ViewCourse from './pages/viewCourse'
 const App = () => {
 
   const dispatch = useDispatch()
@@ -41,6 +46,8 @@ const App = () => {
         <Route path='verify-email' element={<OpenRoute><VerifyEmail /></OpenRoute>} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='catalog/:catalogName' element={<Catalog />} />
+        <Route path='courses/:courseId' />
 
         <Route
           element={
@@ -64,12 +71,26 @@ const App = () => {
             user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
               <>
                 <Route path='dashboard/instructor' element={<Instructor />} />
-                <Route path='dashboard/add-course' element={<AddCourse/>}/>
-                <Route path='dashboard/my-courses' />
-                <Route path='dashboard/edit-course/:courseId' />
+                <Route path='dashboard/add-course' element={<AddCourse />} />
+                <Route path='dashboard/my-courses' element={<MyCourses />} />
+                <Route path='dashboard/edit-course/:courseId' element={<EditCourse />} />
               </>
             )
           }
+        </Route>
+
+        <Route
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          <>
+            <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+              element={<VideoDetails />}
+            />
+          </>
         </Route>
       </Routes>
     </div>
