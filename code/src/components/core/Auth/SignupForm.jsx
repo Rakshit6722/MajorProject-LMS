@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { setSignupData } from '../../../slice/authSlice';
 import { sendOtp } from '../../../services/operations/authAPI';
 import Tab from '../../common/Tab';
-import { AiOutlineEye } from 'react-icons/ai';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 function SignupForm() {
 
@@ -75,9 +75,16 @@ function SignupForm() {
             type: ACCOUNT_TYPE.INSTRUCTOR,
         },
     ]
+    if (email === "rakshitchauhan435@gmail.com") {
+        tabData.push({
+            id: 3,
+            tabName: "Admin",
+            type: ACCOUNT_TYPE.ADMIN
+        });
+    }
     return (
         <div>
-            <Tab tabData={tabData} field={accountType} setField={setAccountType} />
+            
 
             <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
                 <div className="flex gap-x-4">
@@ -189,15 +196,19 @@ function SignupForm() {
                         </span>
                     </label>
                 </div>
+                <Tab tabData={tabData} field={accountType} setField={setAccountType} />
                 <button
+                
                     type="submit"
                     className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
                 >
                     Create Account
                 </button>
             </form>
+            
         </div>
     )
 }
+
 
 export default SignupForm

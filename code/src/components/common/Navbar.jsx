@@ -8,22 +8,26 @@ import ProfileDrowpdown from '../core/Auth/ProfileDrowpdown'
 import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/api'
 import { BsChevronDown } from 'react-icons/bs'
+import { AiOutlineMenu } from 'react-icons/ai'
+import { CgAdd } from "react-icons/cg";
+import IconBtn from './IconBtn'
 
 // for temporary testing
 
 
 function Navbar() {
- 
+
     const { token } = useSelector(state => state.auth)
     const { user } = useSelector(state => state.profile)
     const { totalItems } = useSelector(state => state.cart)
 
     const [subLinks, setSubLinks] = useState([])
-    const [loading,setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
 
     const fetchSubLinks = async () => {
         try {
             const result = await apiConnector("GET", categories.CATEGORIES_API)
+            console.log("result",result)
             setSubLinks(result.data.data)
             setLoading(false)
         } catch (err) {
@@ -108,7 +112,7 @@ function Navbar() {
                 {/* login/signup/dashboard */}
                 <div className='flex gap-x-4 items-center'>
                     {
-                        user && user?.accountType != "Instructor" && (
+                        user && user?.accountType === "Student" && (
                             <Link to={"/dashboard/cart"} className='relative'>
                                 <AiOutlineShoppingCart className='text-2xl text-richblack-100'></AiOutlineShoppingCart>
                                 {
@@ -121,6 +125,13 @@ function Navbar() {
                             </Link>
                         )
                     }
+                    {user && user?.accountType === "Admin" && (
+                        <Link to={'/createCategory'}>
+                            <IconBtn text="Category">
+                                <CgAdd size={20}/>
+                            </IconBtn>
+                        </Link>
+                    )}
                     {token === null && (
                         <Link to="/login">
                             <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
@@ -139,7 +150,6 @@ function Navbar() {
                         <ProfileDrowpdown />
                     )}
                 </div>
-
 
             </div>
         </div>

@@ -68,7 +68,7 @@ function InstructorChart({ courses }) {
             </div>
             <div className='relative mx-auto aspect-square h-full w-full'>
                 <Pie
-                    data={currChart === "students" ? chartDataStudents : charIncomeData}
+                    data={currChart === "students" ? chartDataStudents : chartIncomeData}
                     options={options}
                 />
             </div>

@@ -26,11 +26,11 @@ const courseSlice = createSlice({
         },
         resetCourseState(state) {
             state.step = 1,
-            state.course = null,
-            state.editCourse = false
+                state.course = null,
+                state.editCourse = false
         }
     }
 })
 
-const { setCourse, setStep, setEditCourse, setPaymentLoading, resetCourseState } = courseSlice.actions
+export const{setStep,setCourse,resetCourseState,setPaymentLoading,setEditCourse} = courseSlice.actions
 export default courseSlice.reducer

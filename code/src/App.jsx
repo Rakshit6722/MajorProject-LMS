@@ -25,7 +25,10 @@ import EditCourse from './components/core/Dashboard/EditCourse'
 import MyCourses from './components/core/Dashboard/MyCourses'
 import Catalog from './pages/Catalog'
 import VideoDetails from './components/core/viewCourse/VideoDetails'
+import Error from './pages/Error'
 import ViewCourse from './pages/viewCourse'
+import CreateCategory from './pages/CreateCategory'
+import CourseDetails from './pages/CourseDetails'
 const App = () => {
 
   const dispatch = useDispatch()
@@ -47,7 +50,7 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='catalog/:catalogName' element={<Catalog />} />
-        <Route path='courses/:courseId' />
+        <Route path='courses/:courseId' element={<CourseDetails/>}/>
 
         <Route
           element={
@@ -92,7 +95,13 @@ const App = () => {
             />
           </>
         </Route>
+      {/* admin Route to create category */}
+        <Route path='createCategory' element={<PrivateRoute><CreateCategory /></PrivateRoute>} />
+
+        <Route path='*' element={<Error />} />
       </Routes>
+
+
     </div>
   )
 }

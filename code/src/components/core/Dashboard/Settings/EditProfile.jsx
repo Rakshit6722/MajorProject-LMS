@@ -14,7 +14,7 @@ function EditProfile() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { register, handleSubmit, formData: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     const submitProfileForm = async (data) => {
         try {

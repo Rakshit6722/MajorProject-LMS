@@ -33,7 +33,7 @@ function MyCourses() {
                     <VscAdd />
                 </IconBtn>
             </div>
-            {course && <CourseTable courses={courses} setCourses={setCourses} />}
+            {courses && <CourseTable courses={courses} setCourses={setCourses} />}
         </div>
     )
 }

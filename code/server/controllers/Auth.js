@@ -6,14 +6,14 @@ const otpGenerator = require('otp-generator')
 const jwt = require('jsonwebtoken');
 const cookie = require('cookie-parser')
 const { json } = require('express')
-require('config').config();
+require('dotenv').config();
 const mailSender = require('../utils/mailSender')
-const { passwordUpdate } = require('../templates/passwordUpdate')
+const { passwordUpdated } = require('../templates/passwordUpdate')
 
 
 
 //sendOtp
-exports.sendOTP = async (req, res) => {
+exports.sendotp = async (req, res) => {
 
     try {
 
@@ -110,12 +110,12 @@ exports.signUp = async (req, res) => {
 
         //validate OTP
         if (recentOTP.length == 0) {
-            return res.statu(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "OTP not found"
             })
         } else if (otp !== recentOTP[0].otp) {
-            return res.statu(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "OTP not matched"
             })
@@ -199,7 +199,7 @@ exports.login = async (req, res) => {
                 expiresIn: "24hr"
             })
 
-            user = user.toObject();
+            // user = user.toObject();
             user.token = token;
             user.password = undefined
 
@@ -236,27 +236,30 @@ exports.login = async (req, res) => {
 //changePassword
 exports.changePassword = async (req, res) => {
     try {
+        console.log("inside change password")
         const userDetails = await User.findById(req.user.id)
-
+        console.log("user found")
         const { oldPassword, newPassword } = req.body
 
         const passwordMatch = await bcrypt.compare(oldPassword, userDetails.password)
-
         if (!passwordMatch) {
+            console.log("password not matched")
             return res.status(401).json({
                 success: false,
                 message: "Password is incorrect"
             })
         }
+        console.log("password matched")
 
         const hashpassword = await bcrypt.hash(newPassword, 10)
+        console.log("password hashed")
         const updatedUser = await User.findByIdAndUpdate(req.user.id, { password: hashpassword }, { new: true })
 
         try {
             const emailResponse = await mailSender(
                 updatedUser.email,
                 'Password Updated successfully',
-                passwordUpdate(updatedUser.email, updatedUser.firstName)
+                passwordUpdated(updatedUser.email, updatedUser.firstName)
             )
             console.log("email sent successfully ", emailResponse)
         } catch (err) {
@@ -276,7 +279,7 @@ exports.changePassword = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Password updation failed",
-            error: err.message
+         
         })
     }
 }

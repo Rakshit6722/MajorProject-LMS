@@ -30,5 +30,5 @@ const viewCourseSlice = createSlice({
     }
 })
 
-export const { setCourseSectionData, setCourseEntireData, setCompletedLectures, setTotalNoOfLectures } = viewCourseSlice.actions
+export const { setCourseSectionData, setCourseEntireData, setCompletedLectures, setTotalNoOfLectures, updateCompletedLectures } = viewCourseSlice.actions
 export default viewCourseSlice.reducer

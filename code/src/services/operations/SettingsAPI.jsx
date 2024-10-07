@@ -26,6 +26,7 @@ export function updateDisplayPicture(token, formData) {
                 }
             )
             console.log("UPDATE_DISPLAY_PICTURE_API API RESPONSE...", response)
+            // dispatch(setUser(response?.data?.data))
 
             if (!response.data.success) {
                 throw new Error(response.data.message)
@@ -58,18 +59,18 @@ export const deleteProfile = (token, navigate) => {
             dispatch(logout(navigate))
 
         } catch (err) {
-            console.log("DELETE_PROFILE_API API ERROR............", error)
+            console.log("DELETE_PROFILE_API API ERROR............", err)
             toast.error("Could Not Delete Profile")
         }
         toast.dismiss(toastId)
     }
 }
 
-export const updateProfile = (token, formAData) => {
+export const updateProfile = (token, formData) => {
     return async (dispatch) => {
         const toastId = toast.loading("Loading...")
         try {
-            const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, null, {
+            const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
                 Authorization: `Bearer ${token}`
             })
             console.log("UPDATE PROFILE API API RESPONSE...", response)
@@ -77,8 +78,8 @@ export const updateProfile = (token, formAData) => {
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
-            const userImage = response.data.updatdedUserDetails.image ?
-                response.data.updatdedUserDetails.image :
+            const userImage = response?.data?.updatdedUserDetails?.image ?
+                response?.data?.updatdedUserDetails?.image :
                 `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
 
             dispatch(setUser({ ...response.data.updatdedUserDetails, image: userImage }))
@@ -91,18 +92,18 @@ export const updateProfile = (token, formAData) => {
     }
 }
 
-export const changePassword = async(token, formData) => {
-    return async (dispatch) => {
-        const toastId = toast.loading("Loading...")
-        try {
-            const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
-                Authorization: `Bearer ${token}`
-            })
-            toast.success("Password changed successfully")
-        } catch (err) {
-            console.log("CHANGE_PASSWORD_API API ERROR............", error)
-            toast.error(error.response.data.message)
-        }
-        toast.dismiss(toastId)
+export const changePassword = async (token, formData) => {
+
+    const toastId = toast.loading("Loading...")
+    try {
+        const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
+            Authorization: `Bearer ${token}`
+        })
+        toast.success("Password changed successfully")
+    } catch (err) {
+        console.log("CHANGE_PASSWORD_API API ERROR............", err)
+        toast.error(err.message)
     }
+    toast.dismiss(toastId)
+
 }

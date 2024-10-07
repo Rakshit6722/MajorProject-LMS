@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react'
+import React, { useState, useReducer, useRef } from 'react'
 import { AiOutlineCaretDown } from 'react-icons/ai'
 import { VscDashboard, VscSignOut } from 'react-icons/vsc'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +19,7 @@ function ProfileDrowpdown() {
   if (!user) return null
   return (
     <button className='relative' onClick={() => setOpen(true)}>
-      <div>
+      <div className="flex items-center gap-x-1">
         <img
           src={user?.image}
           alt={`profile-${user?.firstName}`}

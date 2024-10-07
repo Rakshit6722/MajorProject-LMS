@@ -5,7 +5,7 @@ import { FiUpload } from 'react-icons/fi'
 import { updateDisplayPicture } from '../../../../services/operations/SettingsAPI'
 
 function ChangeProfilePicture() {
-    const { token } = useSelector(state = state.auth)
+    const { token } = useSelector(state => state.auth)
     const { user } = useSelector(state => state.profile)
     const dispatch = useDispatch()
 
@@ -60,7 +60,7 @@ function ChangeProfilePicture() {
             <div className="flex items-center gap-x-4">
                 <img
                     src={previewSource || user?.image}
-                    alt={`profile-${uset?.firstName}`}
+                    alt={`profile-${user?.firstName}`}
                     className='aspect-square w-[78px] rounded-full object-cover'
                 />
                 <div className='space-y-2'>

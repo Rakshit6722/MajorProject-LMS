@@ -36,7 +36,7 @@ function Sidebar() {
                 }
             </div>
             <div className="mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-700" />
-            <div>
+            <div className="flex flex-col">
                 <SidebarLink
                     link={{ name: "Settings", path: "/dashboard/settings" }}
                     iconName="VscSettingGear"
@@ -52,6 +52,7 @@ function Sidebar() {
                             btn2Handler: () => setConfirmationModel(null)
                         })
                     }}
+                    className="px-8 py-2 text-sm font-medium text-richblack-300"
                 >
                     <div className='flex items-center gap-x-2'>
                         <VscSignOut className='text-lg' />

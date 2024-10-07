@@ -8,7 +8,7 @@ export const getCatalogPageData = async (categoryId) => {
     let result = []
     try{
         const response = await apiConnector(
-            "GET",
+            "POST",
             catalogData.CATALOGPAGEDATA_API,
             {categoryId: categoryId,}
         )
@@ -19,7 +19,7 @@ export const getCatalogPageData = async (categoryId) => {
     }catch(err){
         console.log("CATALOG PAGE DATA API Error...",err)
         toast.error(err.message)
-        result = err.message.data
+        result = err.response?.data
     }
 
     toast.dismiss(toastId)

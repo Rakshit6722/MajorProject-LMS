@@ -31,6 +31,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
         }
         if (token) {
             dispatch(addToCart(course))
+            toast.success("Course added to Cart")
             return
         }
         setConfirmationModal({

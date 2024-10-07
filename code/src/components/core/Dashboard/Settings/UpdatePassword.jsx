@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
+import { AiOutlineEye,AiOutlineEyeInvisible } from 'react-icons/ai'
 import { useAsyncError, useNavigate } from 'react-router-dom'
 import { changePassword } from '../../../../services/operations/SettingsAPI'
+import IconBtn from '../../../common/IconBtn'
 function UpdatePassword() {
 
     const { token } = useSelector(state => state.auth)
@@ -16,7 +18,8 @@ function UpdatePassword() {
 
     const submitPasswordForm = async (data) => {
         try {
-            await changePassword(token, data)
+            const response = await changePassword(token, data)
+            console.log(response)
         } catch (err) {
             console.log("ERROR MESSAGE - ", err.message)
         }

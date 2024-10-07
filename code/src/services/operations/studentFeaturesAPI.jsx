@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import { studentEndpoints } from "../api";
 import { apiConnector } from "../apiconnector";
 import rzpLogo from "../../assets/Logo/rzp_logo.png"
-import {setpaymentLoading} from '../../slice/courseSlice'
+import {setPaymentLoading} from '../../slice/courseSlice'
 import { resetCart } from "../../slice/cartSlice";
  
 const {
@@ -84,6 +84,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
         console.log("Payment API error...",err);
         toast.error("Could not make Payment.")
     }
+    toast.dismiss(toastId)
 }
 
 
@@ -109,7 +110,7 @@ async function sendPaymentSuccessfulEmail(response, amount, token){
 
 async function verifyPayment(bodyData, token, navigate, dispatch){
     const toastId = toast.loading("Loading...")
-    dispatch(setpaymentLoading(true))
+    dispatch(setPaymentLoading(true))
     try{
         const response = await apiConnector(
             "POST",
@@ -132,5 +133,5 @@ async function verifyPayment(bodyData, token, navigate, dispatch){
         toast.error("Could not verify payment")
     }
     toast.dismiss(toastId)
-    dispatch(setpaymentLoading(false))
+    dispatch(setPaymentLoading(false))
 }

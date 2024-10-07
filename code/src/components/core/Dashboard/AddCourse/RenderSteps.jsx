@@ -67,7 +67,7 @@ function RenderSteps() {
                 }
             </div>
 
-            <div className='relative mb-16 flex w-full select-none justify-center'>
+            <div className='relative mb-16 flex w-full select-none justify-between'>
                 {
                     steps.map((item) => (
                         <>

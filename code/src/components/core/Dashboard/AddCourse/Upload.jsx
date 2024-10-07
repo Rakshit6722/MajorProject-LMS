@@ -90,6 +90,7 @@ function Upload({
                   setSelectedFile("")
                   setValue(name, null)
                 }}
+                className="mt-3 text-richblack-400 underline"
               >
                 Cancel
               </button>

@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { buyCourse } from '../../../../services/operations/studentFeaturesAPI'
+import IconBtn from '../../../common/IconBtn'
 
 const RenderTotalAmout = () => {
 
@@ -23,7 +24,7 @@ const RenderTotalAmout = () => {
             <IconBtn
                 text="Buy Now"
                 onclick={handleBuyCourse}
-                customClasses="w-full justify-center"
+                customClasses="w-full justify-center yellowButton"
             />
         </div>
     )

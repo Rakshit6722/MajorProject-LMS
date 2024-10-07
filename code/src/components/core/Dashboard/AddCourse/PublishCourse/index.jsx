@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +6,7 @@ import IconBtn from '../../../../common/IconBtn'
 import { setStep } from "../../../../../slice/courseSlice"
 import { COURSE_STATUS } from '../../../../../utils/constants'
 import { editCourseDetails } from '../../../../../services/operations/courseDetailsAPI'
+import { resetCourseState } from '../../../../../slice/courseSlice'
 
 function PublishCourse() {
 

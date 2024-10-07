@@ -38,24 +38,23 @@ const cartSlice = createSlice({
             toast.success("Course added to Cart")
 
         },
-        removeFromCart(state,action){
-            const course = action.payload
-            const index = state.cart.findIndex((item)=>item._id === course._id)
-
-            //if course is found remove it
-            if(index>=0){
-                state.totalItems--
-                state.total -= state.cart[index].price
-                state.cart.splice(index,1)
-
-                //update localStorage
-                localStorage.setItem("cart",JSON.stringify(state.cart))
-                localStorage.setItem("total",JSON.stringify(state.total))
-                localStorage.setItem("totalItems",JSON.stringify(state.totalItems))
-
-                toast.success("Course removed from cart")
+        removeFromCart: (state, action) => {
+            const courseId = action.payload
+            const index = state.cart.findIndex((item) => item._id === courseId)
+      
+            if (index >= 0) {
+              // If the course is found in the cart, remove it
+              state.totalItems--
+              state.total -= state.cart[index].price
+              state.cart.splice(index, 1)
+              // Update to localstorage
+              localStorage.setItem("cart", JSON.stringify(state.cart))
+              localStorage.setItem("total", JSON.stringify(state.total))
+              localStorage.setItem("totalItems", JSON.stringify(state.totalItems))
+              // show toast
+              toast.success("Course removed from cart")
             }
-        },
+          },
         resetCart(state,action){
             state.cart = []
             state.total = 0

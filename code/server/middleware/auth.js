@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtokens')
+const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const User = require('../model/User')
 //auth
@@ -40,7 +40,7 @@ exports.auth = async (req,res,next) => {
 //isStudent
 exports.isStudent = async(req,res,next)=>{
     try{
-        if(req.user.accountType!='Student'){
+        if(req.user.accountType!=='Student'){
             return res.status(401).json({
                 success:false,
                 message:"this is a protected route for student only"
@@ -60,7 +60,7 @@ exports.isStudent = async(req,res,next)=>{
 //isInstructor
 exports.isInstructor = async(req,res,next)=>{
     try{
-        if(req.user.accountType!='Instructor'){
+        if(req.user.accountType!=='Instructor'){
             return res.status(401).json({
                 success:false,
                 message:"this is a protected route for instructor only"
@@ -79,7 +79,7 @@ exports.isInstructor = async(req,res,next)=>{
 //isAdmin
 exports.isAdmin = async(req,res,next)=>{
     try{
-        if(req.user.accountType!='Admir'){
+        if(req.user.accountType!=='Admin'){
             return res.status(401).json({
                 success:false,
                 message:"this is a protected route for admin only"

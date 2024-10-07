@@ -18,6 +18,7 @@ export function sendOtp(email, navigate) {
         const toastId = toast.loading("Loading...")
         dispatch(setLoading(true))
         try {
+            console.log("inside sendotp")
             const response = await apiConnector("POST", SENDOTP_API, {
                 email,
                 checkUserPresent: true,
@@ -33,8 +34,9 @@ export function sendOtp(email, navigate) {
             navigate("/verify-email")
 
         } catch (err) {
+            console.log("exited")
             console.log("SENDOTP API ERROR...", err)
-            toast.error("Could not send OTP")
+            toast.error(err.message)
         }
         dispatch(setLoading(false))
         toast.dismiss(toastId)
@@ -143,6 +145,7 @@ export function signUp(
         const toastId = toast.loading("Loading...")
         dispatch(setLoading(true))
         try{
+            console.log("inside signup api")
             const response = await apiConnector("POSt",SIGNUP_API,{
                 accountType,
                 firstName,
@@ -161,6 +164,7 @@ export function signUp(
             toast.success("Signup Successful")
             navigate("/login")
         }catch(err){
+            console.log("exited signup api")
             console.log("SIGNUP API FAILED...",err)
             toast.error("Signup Failed")
             navigate("/signup")

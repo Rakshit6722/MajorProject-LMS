@@ -6,7 +6,7 @@ import IconBtn from '../../../../common/IconBtn'
 import NestedView from './NestedView'
 import { MdNavigateNext } from 'react-icons/md'
 import { getPasswordResetToken } from '../../../../../services/operations/authAPI'
-import { setStep, setEditCourse } from '../../../../../slice/courseSlice'
+import { setStep, setEditCourse, setCourse } from '../../../../../slice/courseSlice'
 import toast from 'react-hot-toast'
 import { createSection, updateSection } from '../../../../../services/operations/courseDetailsAPI'
 
@@ -26,18 +26,19 @@ function CourseBuilderForm() {
     }
 
     const goToNext = () => {
-        if (course.courseContent.length == 0) {
+        if (course.courseContent.length === 0) {
             toast.error("Please add atleast one section")
             return
         }
 
 
         //.some() returns either true or false
-        if (course.courseContent.some((section) => section.subsection.length === 0)) {
+        if (
+            course.courseContent.some((section) => section.subSection.length === 0)
+        ) {
             toast.error("Please add atleast one lecture in each section")
             return
         }
-
         dispatch(setStep(3))
     }
 
@@ -47,7 +48,7 @@ function CourseBuilderForm() {
     }
 
     const handleChangeEditSectionName = (sectionId, sectionName) => {
-        if (editSectionName == sectionId) {
+        if (editSectionName === sectionId) {
             cancelEdit()
             return
         }
@@ -105,6 +106,7 @@ function CourseBuilderForm() {
                         disabled={loading}
                         placeholder='Add a section to build your course'
                         {...register("sectionName", { required: true })}
+                        className="form-style w-full"
                     />
                     {errors.sectionName && (
                         <span className='ml-2 text-xs tracking-wide text-pink-200'>

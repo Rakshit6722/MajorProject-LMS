@@ -1,5 +1,5 @@
 // const BASE_URL = process.env.REACT_APP_BASE_URL
-const BASE_URL = "https://localhost:4000/api/v1"
+const BASE_URL = "http://localhost:4000/api/v1"
 
 export const endpoints = {
     SENDOTP_API: BASE_URL + "/auth/sendotp",
@@ -40,6 +40,7 @@ export const courseEndpoints = {
     GET_ALL_COURSE_API: BASE_URL + "/course/getAllCourses",
     COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
     EDIT_COURSE_API: BASE_URL + "/course/editCourse",
+    CREATE_CATEGORY_API:BASE_URL+"/course/createCategory",
     COURSE_CATEGORIES_API: BASE_URL + "/course/showAllCategories",
     CREATE_COURSE_API: BASE_URL + "/course/createCourse",
     CREATE_SECTION_API: BASE_URL + "/course/addSection",

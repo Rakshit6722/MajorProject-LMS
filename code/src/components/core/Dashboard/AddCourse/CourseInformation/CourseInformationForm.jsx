@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { HiOutlineCurrencyRupee } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -126,7 +126,8 @@ function CourseInformationForm() {
         formData.append("thumbnailImage", data.courseImage)
 
         setLoading(true)
-        const result = await addCourseDetails(data, token)
+        console.log(token)
+        const result = await addCourseDetails(formData, token)
         if (result) {
             dispatch(setStep(2))
             dispatch(setCourse(result))

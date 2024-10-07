@@ -1,13 +1,19 @@
 import React from 'react'
-import * as Icons from "react-icons/vsc"
+import {VscAccount} from "react-icons/vsc"
+import {VscDashboard} from "react-icons/vsc"
+import {VscVm} from "react-icons/vsc"
+import {VscAdd} from "react-icons/vsc"
+import {VscMortarBoard} from "react-icons/vsc"
+import {VscHistory} from "react-icons/vsc"
 import { useDispatch } from 'react-redux'
 import { matchPath, NavLink, useLocation } from 'react-router-dom'
 import resetCourseState from '../../../slice/cartSlice'
-
+import { sidebarLinks } from '../../../data/dashboard-links'
 
 function SidebarLink({ link, iconName }) {
 
-    const Icon = Icons[iconName]
+    const Icon = iconName
+    console.log(Icon)
     const location = useLocation()
     const dispatch = useDispatch()
 

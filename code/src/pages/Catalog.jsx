@@ -23,7 +23,8 @@ function Catalog() {
                 "GET",
                 categories.CATEGORIES_API
             )
-            const category_Id = response?.data?.data?.filter((ct) => ct.name.split(" ".join("-").toLowerCase() === catalogName))[0]._id
+            console.log("res1: ",response);
+            const category_Id = response?.data?.data?.filter((ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName)[0]._id
             setCategoryId(category_Id)
         }
         getCategories()
@@ -32,7 +33,7 @@ function Catalog() {
     useEffect(() => {
         const getCategoryDetails = async () => {
             try {
-                const response = await getCatalogPageData(categoryId)
+                const res = await getCatalogPageData(categoryId)
                 console.log("res: ", res)
                 setCatalogPageData(res)
             } catch (err) {
@@ -50,11 +51,6 @@ function Catalog() {
             <div className='grid min-h-[calc(100vh-3.5rem)] place-items-center'>
                 <div className='spinner'></div>
             </div>
-        )
-    }
-    if (!loading || !catalogPageData.success) {
-        return (
-            <Error />
         )
     }
 
